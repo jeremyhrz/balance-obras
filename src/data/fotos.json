@@ -1,0 +1,762 @@
+{
+  "portada": {
+    "ancho": 2000,
+    "alto": 1125,
+    "proporcion": "16:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/portada-128c754b",
+    "placeholder": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoQAAkAAwBSJaACdFkAAbOQ1XgA/oIe1mxalxEIeVsoXzpd0DUhrKEWQi0OrjuLdfSUEz31xnfwctNtuxrIlAAA",
+    "color": "#6b4e30",
+    "alt": "Grúa torre en silueta contra el cielo del atardecer",
+    "referencial": true
+  },
+  "portada@movil": {
+    "ancho": 843,
+    "alto": 1499,
+    "proporcion": "9:16",
+    "anchos": [
+      480,
+      768
+    ],
+    "base": "/fotos/portada__movil-240fa330",
+    "placeholder": "data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAACQBACdASoQABwAPt1apkyopSOiMAgBEBuJbACdMoMYAN1UcyUTULnnRW3PJ4AA/u+ONe28LSqdEqIsLHaNv6txOyatWS8cgYnhStiyTmO/rXy5e+xRwAabursZT7FMWQUP4vaKt6hYJuUsuYpMz/Sq3D6Cy4zMgUpv/JoH+y38mMbbssd0Teb+h3vkAcodAa+D2HMFd/bX+Hbp9Fh8f5EvNClWxKQDRRMvIs/WoSdUhSI6a3kKAAAA",
+    "color": "#8d4f39",
+    "alt": "Grúa torre entre dos edificios con el cielo rojo del atardecer"
+  },
+  "arquitectura-edificio": {
+    "ancho": 2000,
+    "alto": 1125,
+    "proporcion": "16:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/arquitectura-edificio-201505ae",
+    "placeholder": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAQCdASoQAAkAAwBSJZQC7AEXSFkxEAD43nt83cieb2iFe+7l8zhPuzTmfBO0u8ZUb+obZLniBiIPGjtkMsRfZXSIkA5w4jLwEpUC7X/qtAAA",
+    "color": "#7a7a7a",
+    "alt": "Edificio moderno de terrazas escalonadas, fachada blanca y vidrio oscuro",
+    "referencial": true
+  },
+  "arquitectura-edificio@movil": {
+    "ancho": 840,
+    "alto": 1493,
+    "proporcion": "9:16",
+    "anchos": [
+      480,
+      768
+    ],
+    "base": "/fotos/arquitectura-edificio__movil-a48f7a52",
+    "placeholder": "data:image/webp;base64,UklGRs4AAABXRUJQVlA4IMIAAACQBACdASoQABwAPt1apkyopSOiMAgBEBuJZQDG9mwHWiRe8s7UAUXryCob6QAA9fQQQ3xdwnkLckAYHEgIV0riQb4xXa1AMTbZ0nsM1yao9W5U+Fs0F+7vzUFDtOagC+KOJ1bS7as3FV/iOlhEGRIxIm7AJ8faV1d6mjpYevhCE30fN727ZVXYaQ2/f2QMifz9ndm+JhUf/wuMk4XWvT3DJnYRXmxiuT9iPrSGBi5zMZIhWOpCu+eNS8zFD+dLyt0AAA==",
+    "color": "#6b6966"
+  },
+  "arquitectura-edificio@movil-plano": {
+    "ancho": 840,
+    "alto": 1493,
+    "proporcion": "9:16",
+    "anchos": [
+      480,
+      768
+    ],
+    "base": "/fotos/arquitectura-edificio__movil-plano-c00a00c6",
+    "color": "#193452",
+    "alt": "Versión de plano: edificio moderno de terrazas escalonadas"
+  },
+  "estructura-acero": {
+    "ancho": 2000,
+    "alto": 1500,
+    "proporcion": "4:3",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/estructura-acero-483406fa",
+    "color": "#6e5f4b",
+    "alt": "Interior de una jaula de acero de refuerzo vista hacia el cielo",
+    "referencial": true
+  },
+  "estructura-acero@tarjeta": {
+    "ancho": 1200,
+    "alto": 1500,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1200
+    ],
+    "base": "/fotos/estructura-acero__tarjeta-74295d7a",
+    "color": "#6c5e4b"
+  },
+  "estructura-acero@ancho": {
+    "ancho": 1998,
+    "alto": 856,
+    "proporcion": "21:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/estructura-acero__ancho-c658c97b",
+    "color": "#6e5d45"
+  },
+  "estructura-encofrado": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/estructura-encofrado-15f7c51b",
+    "color": "#8c7245",
+    "alt": "Obrero colocando el encofrado de una losa, visto desde arriba",
+    "referencial": true
+  },
+  "estructura-encofrado@tarjeta": {
+    "ancho": 1066,
+    "alto": 1332,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1066
+    ],
+    "base": "/fotos/estructura-encofrado__tarjeta-57150d98",
+    "color": "#816b45"
+  },
+  "estructura-encofrado@ancho": {
+    "ancho": 1990,
+    "alto": 853,
+    "proporcion": "21:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/estructura-encofrado__ancho-684e62cd",
+    "color": "#93794b"
+  },
+  "remodelacion-bano": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/remodelacion-bano-7c14b378",
+    "color": "#7a6c58",
+    "alt": "Baño con bañera exenta y ventanas de marco oscuro",
+    "referencial": true
+  },
+  "remodelacion-bano@tarjeta": {
+    "ancho": 1066,
+    "alto": 1332,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1066
+    ],
+    "base": "/fotos/remodelacion-bano__tarjeta-8684e622",
+    "color": "#7b6f5b"
+  },
+  "remodelacion-bano@ancho": {
+    "ancho": 1990,
+    "alto": 853,
+    "proporcion": "21:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/remodelacion-bano__ancho-be8dc4b6",
+    "color": "#7a6e5b"
+  },
+  "asfaltado-pavimentadora": {
+    "ancho": 1934,
+    "alto": 1450,
+    "proporcion": "4:3",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/asfaltado-pavimentadora-223e786d",
+    "color": "#726858",
+    "alt": "Pavimentadora y compactadora tendiendo asfalto en una vía, vista desde arriba",
+    "referencial": true
+  },
+  "asfaltado-pavimentadora@tarjeta": {
+    "ancho": 1160,
+    "alto": 1450,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1160
+    ],
+    "base": "/fotos/asfaltado-pavimentadora__tarjeta-c89dc663",
+    "color": "#6d6554"
+  },
+  "asfaltado-pavimentadora@ancho": {
+    "ancho": 1997,
+    "alto": 856,
+    "proporcion": "21:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/asfaltado-pavimentadora__ancho-bb023254",
+    "color": "#6b6354"
+  },
+  "planos-mesa": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/planos-mesa-3f0720e6",
+    "color": "#aea495",
+    "alt": "Plano de planta con cotas, un portaminas y un escalímetro",
+    "referencial": true
+  },
+  "planos-mesa@tarjeta": {
+    "ancho": 1066,
+    "alto": 1332,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1066
+    ],
+    "base": "/fotos/planos-mesa__tarjeta-dacf9ea5",
+    "color": "#ada394"
+  },
+  "planos-mesa@ancho": {
+    "ancho": 1990,
+    "alto": 853,
+    "proporcion": "21:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/planos-mesa__ancho-aa38e3fc",
+    "color": "#a89f90"
+  },
+  "estructura-columnas-losas": {
+    "ancho": 2000,
+    "alto": 1500,
+    "proporcion": "4:3",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/estructura-columnas-losas-d8a96138",
+    "color": "#736c61",
+    "alt": "Edificio de concreto en construcción, con andamios y una grúa torre al atardecer",
+    "referencial": true
+  },
+  "estructura-columnas-losas@tarjeta": {
+    "ancho": 1200,
+    "alto": 1500,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1200
+    ],
+    "base": "/fotos/estructura-columnas-losas__tarjeta-feb1b811",
+    "color": "#6c655b"
+  },
+  "estructura-columnas-losas@ancho": {
+    "ancho": 1998,
+    "alto": 856,
+    "proporcion": "21:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/estructura-columnas-losas__ancho-8a791cfa",
+    "color": "#70685d"
+  },
+  "equipo-armador": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/equipo-armador-dc5081fa",
+    "color": "#71634d",
+    "alt": "Armador con braga naranja caminando sobre la malla de acero de una losa",
+    "referencial": true
+  },
+  "equipo-armador@tarjeta": {
+    "ancho": 1066,
+    "alto": 1332,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1066
+    ],
+    "base": "/fotos/equipo-armador__tarjeta-fe21163a",
+    "color": "#715f48"
+  },
+  "remodelacion-cocina": {
+    "ancho": 1992,
+    "alto": 1328,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/remodelacion-cocina-aaad517a",
+    "color": "#8a8175",
+    "alt": "Cocina blanca con isla, lámparas colgantes negras y piso de madera",
+    "referencial": true
+  },
+  "remodelacion-cocina@tarjeta": {
+    "ancho": 1062,
+    "alto": 1328,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1062
+    ],
+    "base": "/fotos/remodelacion-cocina__tarjeta-5a27da94",
+    "color": "#80786d"
+  },
+  "remodelacion-cocina-isla": {
+    "ancho": 1060,
+    "alto": 1325,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1060
+    ],
+    "base": "/fotos/remodelacion-cocina-isla-41408e0f",
+    "color": "#978e82",
+    "alt": "Isla de cocina con taburetes y dos lámparas colgantes negras",
+    "referencial": true
+  },
+  "remodelacion-sala": {
+    "ancho": 2000,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/remodelacion-sala-54bcbe4f",
+    "color": "#8b7c69",
+    "alt": "Sala con butaca curva, mesa de piedra y mueble bajo negro",
+    "referencial": true
+  },
+  "remodelacion-sala@tarjeta": {
+    "ancho": 1067,
+    "alto": 1334,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1067
+    ],
+    "base": "/fotos/remodelacion-sala__tarjeta-4170ed4d",
+    "color": "#7c6d5b"
+  },
+  "asfaltado-via-nueva": {
+    "ancho": 1992,
+    "alto": 1328,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/asfaltado-via-nueva-77924086",
+    "color": "#655e55",
+    "alt": "Carretera de montaña recién asfaltada, con la raya central amarilla",
+    "referencial": true
+  },
+  "asfaltado-via-nueva@tarjeta": {
+    "ancho": 1062,
+    "alto": 1328,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1062
+    ],
+    "base": "/fotos/asfaltado-via-nueva__tarjeta-097fb6d5",
+    "color": "#5d574f"
+  },
+  "asfaltado-compactadora": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/asfaltado-compactadora-95a9860b",
+    "color": "#8a8275",
+    "alt": "Rodillo compactador y cuadrilla tendiendo asfalto en una vía urbana",
+    "referencial": true
+  },
+  "asfaltado-compactadora@tarjeta": {
+    "ancho": 1066,
+    "alto": 1332,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1066
+    ],
+    "base": "/fotos/asfaltado-compactadora__tarjeta-923dfa0e",
+    "color": "#90887b"
+  },
+  "arquitectura-casa": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/arquitectura-casa-7844b539",
+    "color": "#5f584b",
+    "alt": "Casa contemporánea de bloque de concreto a la vista entre árboles",
+    "referencial": true
+  },
+  "arquitectura-casa@tarjeta": {
+    "ancho": 1066,
+    "alto": 1332,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1066
+    ],
+    "base": "/fotos/arquitectura-casa__tarjeta-bf9698a0",
+    "color": "#7d7565"
+  },
+  "arquitectura-fachada": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/arquitectura-fachada-073d39ed",
+    "color": "#a29787",
+    "alt": "Fachada blanca de un edificio residencial, con bandas de ventanas y un balcón",
+    "referencial": true
+  },
+  "arquitectura-fachada@tarjeta": {
+    "ancho": 1066,
+    "alto": 1332,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1066
+    ],
+    "base": "/fotos/arquitectura-fachada__tarjeta-f96e82c5",
+    "color": "#988d7c"
+  },
+  "equipo-ingenieros-planos": {
+    "ancho": 1994,
+    "alto": 997,
+    "proporcion": "2:1",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/equipo-ingenieros-planos-82d5382e",
+    "color": "#6a6761",
+    "alt": "Ingenieros con casco revisando planos frente a un corte de roca",
+    "referencial": true
+  },
+  "maquinaria-retroexcavadora": {
+    "ancho": 1996,
+    "alto": 1331,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/maquinaria-retroexcavadora-97a7d35e",
+    "color": "#6e6a5e",
+    "alt": "Retroexcavadora amarilla sobre la grama, entre palmeras",
+    "referencial": true
+  },
+  "maquinaria-excavadora": {
+    "ancho": 2000,
+    "alto": 1125,
+    "proporcion": "16:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/maquinaria-excavadora-21f37203",
+    "color": "#5e5748",
+    "alt": "Excavadora en silueta a contraluz del sol",
+    "referencial": true
+  },
+  "maquinaria-excavadora@movil": {
+    "ancho": 633,
+    "alto": 1125,
+    "proporcion": "9:16",
+    "anchos": [
+      480,
+      633
+    ],
+    "base": "/fotos/maquinaria-excavadora__movil-8985dad8",
+    "color": "#665f50"
+  },
+  "planos-herramientas": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/planos-herramientas-3fc19715",
+    "color": "#716b60",
+    "alt": "Transportador y escuadra sobre un plano",
+    "referencial": true
+  },
+  "equipo-obreros": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/equipo-obreros-98bce810",
+    "color": "#736755",
+    "alt": "Tres obreros con casco amarrando el acero de una losa",
+    "referencial": true
+  },
+  "equipo-obreros@tarjeta": {
+    "ancho": 1066,
+    "alto": 1332,
+    "proporcion": "4:5",
+    "anchos": [
+      480,
+      768,
+      1066
+    ],
+    "base": "/fotos/equipo-obreros__tarjeta-5a4d8fea",
+    "color": "#726655"
+  },
+  "equipo-obreros@ancho": {
+    "ancho": 1999,
+    "alto": 857,
+    "proporcion": "21:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/equipo-obreros__ancho-29a129e7",
+    "color": "#736654"
+  },
+  "portada-gruas-hora-azul": {
+    "ancho": 2000,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/portada-gruas-hora-azul-b0b0c470",
+    "color": "#64696b",
+    "alt": "Grúas torre sobre la ciudad al anochecer",
+    "referencial": true
+  },
+  "portada-gruas-hora-azul@ancho": {
+    "ancho": 1999,
+    "alto": 857,
+    "proporcion": "21:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/portada-gruas-hora-azul__ancho-af427176",
+    "color": "#717372"
+  },
+  "portada-gruas-hora-azul@movil": {
+    "ancho": 750,
+    "alto": 1333,
+    "proporcion": "9:16",
+    "anchos": [
+      480,
+      750
+    ],
+    "base": "/fotos/portada-gruas-hora-azul__movil-a894c02b",
+    "color": "#686c6d"
+  },
+  "arquitectura-edificio@plano": {
+    "ancho": 2000,
+    "alto": 1125,
+    "proporcion": "16:9",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/arquitectura-edificio__plano-0a23e8d0",
+    "color": "#1a3653",
+    "alt": "Versión de plano: Edificio moderno de terrazas escalonadas, fachada blanca y vidrio oscuro"
+  },
+  "estructura-columnas-losas@plano": {
+    "ancho": 2000,
+    "alto": 1500,
+    "proporcion": "4:3",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/estructura-columnas-losas__plano-f521aded",
+    "color": "#1c3856",
+    "alt": "Versión de plano: Edificio de concreto en construcción, con andamios y una grúa torre al atardecer"
+  },
+  "remodelacion-cocina@plano": {
+    "ancho": 1992,
+    "alto": 1328,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/remodelacion-cocina__plano-958b209c",
+    "color": "#1b3958",
+    "alt": "Versión de plano: Cocina blanca con isla, lámparas colgantes negras y piso de madera"
+  },
+  "remodelacion-sala@plano": {
+    "ancho": 2000,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/remodelacion-sala__plano-c119f441",
+    "color": "#1f3c5b",
+    "alt": "Versión de plano: Sala con butaca curva, mesa de piedra y mueble bajo negro"
+  },
+  "asfaltado-via-nueva@plano": {
+    "ancho": 1992,
+    "alto": 1328,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/asfaltado-via-nueva__plano-0677a251",
+    "color": "#173350",
+    "alt": "Versión de plano: Carretera de montaña recién asfaltada, con la raya central amarilla"
+  },
+  "asfaltado-compactadora@plano": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/asfaltado-compactadora__plano-a7abbd6a",
+    "color": "#183554",
+    "alt": "Versión de plano: Rodillo compactador y cuadrilla tendiendo asfalto en una vía urbana"
+  },
+  "arquitectura-fachada@plano": {
+    "ancho": 1999,
+    "alto": 1333,
+    "proporcion": "3:2",
+    "anchos": [
+      480,
+      768,
+      1200,
+      1920
+    ],
+    "base": "/fotos/arquitectura-fachada__plano-3d509282",
+    "color": "#1c3b5a",
+    "alt": "Versión de plano: Fachada blanca de un edificio residencial, con bandas de ventanas y un balcón"
+  }
+}

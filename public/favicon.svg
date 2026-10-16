@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64"><defs>
+<linearGradient id="oro" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="62" y2="161">
+  <stop offset="0" stop-color="#F0DAA6"/><stop offset=".16" stop-color="#E8CC8E"/><stop offset=".42" stop-color="#C9A45C"/>
+  <stop offset=".7" stop-color="#B08A45"/><stop offset="1" stop-color="#8A6A33"/>
+</linearGradient>
+<linearGradient id="brillo" gradientUnits="userSpaceOnUse" x1="0" y1="18" x2="52" y2="128">
+  <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".4" stop-color="#fff" stop-opacity=".2"/>
+  <stop offset=".47" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="concreto" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="161">
+  <stop offset="0" stop-color="#DFE1E2"/><stop offset=".55" stop-color="#B9BCBE"/><stop offset="1" stop-color="#929597"/>
+</linearGradient>
+<linearGradient id="letras" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100">
+  <stop offset="0" stop-color="#DFE1E2"/><stop offset=".6" stop-color="#B9BCBE"/><stop offset="1" stop-color="#9A9DA0"/>
+</linearGradient>
+<linearGradient id="oroTexto" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#E8CC8E"/><stop offset=".55" stop-color="#C9A45C"/><stop offset="1" stop-color="#A9843F"/>
+</linearGradient></defs><rect width="64" height="64" rx="14" fill="#111213"/><g transform="translate(11.69 9.00) scale(0.28571)"><g transform="translate(2.2 3)"><path d="M0 24L52 0L52 57.24L0 90Z" fill="#5E4520"/><path d="M0 99L52 66.24L52 161L0 161Z" fill="#5E4520"/><path d="M60 0L115.49 33.3A34 34 0 0 1 123.64 84.77L101.35 75.01A13 13 0 0 0 104.69 51.3L60 24.49Z" fill="#3A3D3F"/><path d="M60 64L115.24 88.19A38 38 0 0 1 100 161L60 161L60 140L100 140A17 17 0 0 0 106.82 107.43L60 86.93Z" fill="#3A3D3F"/></g><path d="M0 99L52 66.24L52 161L0 161Z" fill="url(#oro)"/><path d="M0 99L52 66.24L52 161L0 161Z" fill="url(#brillo)"/><path d="M0 24L52 0L52 57.24L0 90Z" fill="url(#oro)"/><path d="M0 24L52 0L52 57.24L0 90Z" fill="url(#brillo)"/><path d="M60 64L115.24 88.19A38 38 0 0 1 100 161L60 161L60 140L100 140A17 17 0 0 0 106.82 107.43L60 86.93Z" fill="url(#concreto)"/><path d="M60 0L115.49 33.3A34 34 0 0 1 123.64 84.77L101.35 75.01A13 13 0 0 0 104.69 51.3L60 24.49Z" fill="url(#concreto)"/></g></svg>

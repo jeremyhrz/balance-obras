@@ -1,0 +1,8 @@
+Fotos y videos REALES de las obras de Balance Obras Civiles.
+
+Una carpeta por obra, con el mismo id que en src/data/obras.js:
+  fotos_originales/obras/<id-de-la-obra>/01.jpg, 02.jpg, …   (la 01 es la portada)
+  fotos_originales/obras/<id-de-la-obra>/recorrido.mp4 + recorrido.jpg   (video + su póster, mismo nombre)
+
+Luego: python scripts/optimizar_fotos.py  (genera las variantes y el manifiesto).
+Los pasos completos están en README.md → «Cómo agregar una obra nueva».

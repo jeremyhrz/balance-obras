@@ -1,0 +1,454 @@
+{
+  "_leeme": "Configuración de scripts/optimizar_fotos.py (ahí está explicado todo). Las claves que empiezan con «_» se ignoran: sirven de comentario y de ejemplo. Rutas de «origen»: relativas a fotos_originales/. Caja: [x0, y0, x1, y1] en fracciones 0–1 del original. Después de editar: python scripts/optimizar_fotos.py --hoja .capturas/fotos/hoja.jpg",
+  "anchos": [480, 768, 1200, 1920],
+  "calidad": { "avif": 55, "webp": 78 },
+  "placeholder": {
+    "_leeme": "Placeholder borroso (WebP de «ancho» px en base64) sobre el que la foto se funde al cargar. Viaja DENTRO del JS (fotos.json va en el bundle) y no se comprime: solo lo llevan las fotos con \"placeholder\": true (las que se ven al cargar); las demás se funden sobre su color medio.",
+    "ancho": 16,
+    "porDefecto": false
+  },
+  "gradaciones": {
+    "_leeme": "Presets de gradación («carbón y oro»). gamma: número o \"auto\" (gammaObjetivo = luminancia media buscada 0–1, gammaFuerza 0–1, gammaLimites). luminanciaTono / saturacionTono / giroTono: [[grado, valor], …] sobre la rueda de color (0 rojo, 30 naranja, 60 amarillo, 120 verde, 180 cian, 240 azul, 300 magenta, 360 rojo): oscurecer ese color según su saturación (factor ≤ 1, como un filtro en blanco y negro: cielos y follaje más bajos) / factor de saturación / desplazamiento del tono en grados. saturacion, contraste, brillo: 1 = igual. curva: curva en S 0–1. calidez: 0–1 (luz suave del mapa sombras→luces). nd: {fuerza 0–0,6, hasta 0–1} filtro degradado desde arriba para cielos lavados. negro / blanco: niveles de salida, número o [r, g, b]. vineta: 0–0,6. Una foto pide un preset (\"balance\") o lo corrige: {\"preset\": \"balance\", \"nd\": {…}} — correcciones de colorista, no otro look.",
+    "balance": {
+      "gamma": "auto",
+      "gammaObjetivo": 0.36,
+      "gammaFuerza": 0.7,
+      "gammaLimites": [0.9, 1.9],
+      "luminanciaTono": [
+        [0, 1], [30, 1], [45, 0.97], [60, 0.9], [90, 0.75], [150, 0.72], [180, 0.68], [210, 0.6], [240, 0.62],
+        [270, 0.75], [320, 0.92], [360, 1]
+      ],
+      "saturacionTono": [
+        [0, 0.74], [18, 0.88], [38, 0.9], [52, 0.74], [62, 0.6], [75, 0.45], [90, 0.32], [160, 0.32], [185, 0.3],
+        [215, 0.4], [250, 0.44], [290, 0.38], [330, 0.56], [360, 0.74]
+      ],
+      "giroTono": [
+        [0, 12], [20, 5], [38, 0], [48, -6], [62, -14], [90, -24], [150, -18], [170, 0], [190, 14], [212, 6],
+        [235, 0], [330, 0], [345, 9], [360, 12]
+      ],
+      "saturacion": 0.94,
+      "curva": 0.36,
+      "calidez": 0.68,
+      "sombras": [12, 14, 18],
+      "luces": [240, 205, 150],
+      "negro": [14, 15, 17],
+      "blanco": [238, 228, 208],
+      "vineta": 0.38
+    },
+    "suave": {
+      "gamma": "auto",
+      "gammaObjetivo": 0.45,
+      "gammaFuerza": 0.3,
+      "gammaLimites": [0.95, 1.3],
+      "saturacionTono": [
+        [0, 0.95], [40, 1], [60, 0.95], [90, 0.75], [160, 0.75], [190, 0.8], [250, 0.85], [360, 0.95]
+      ],
+      "giroTono": [[0, 0], [60, 0], [90, -8], [150, -6], [175, 0], [360, 0]],
+      "saturacion": 0.96,
+      "curva": 0.18,
+      "calidez": 0.3,
+      "sombras": [16, 17, 21],
+      "luces": [236, 214, 170],
+      "negro": [9, 10, 11],
+      "blanco": [250, 245, 236],
+      "vineta": 0.18
+    }
+  },
+  "obras": {
+    "_leeme": "Fotos REALES: todo lo que haya en fotos_originales/obras/<idObra>/ se procesa solo (id «obras/<idObra>/<archivo sin extensión>»). «proporcion»: null = la del original. «portada»: lo que recibe además la PRIMERA imagen de cada carpeta (01.jpg): los mismos usos que las portadas de ejemplo («tarjeta» 4:5 y la versión de plano del comparador). «ajustes»: cambios por foto con su clave «<idObra>/<archivo>» (caja, proporcion, alt, plano, usos…).",
+    "gradacion": "suave",
+    "proporcion": null,
+    "portada": { "usos": { "tarjeta": { "proporcion": "4:5" } }, "plano": true },
+    "ajustes": {
+      "_ejemplo/02": { "caja": [0, 0.1, 1, 0.9], "proporcion": "4:5", "alt": "Losa de entrepiso recién vaciada" }
+    }
+  },
+  "fotos": {
+    "_leeme": "Fotos REFERENCIALES (fotos_originales/referenciales/, créditos en su creditos.json → src/data/creditos.js). Cada id: su recorte base y sus usos, que se piden como <Foto id uso=\"…\" /> o, para el teléfono, movil=\"movil\". Usos: «tarjeta» 4:5 (tarjetas del portafolio, servicios en el teléfono), «ancho» 21:9 (paneles y franjas anchas), «movil» 9:16 (fondos a pantalla completa en el teléfono), «plano» (automático con \"plano\": true: la mitad «Plano» del comparador), «movil-plano» 9:16. Qué id usa cada sección: src/data/balance.js (FOTOS, SERVICIOS[].foto) y src/data/obras.js.",
+    "portada": {
+      "_leeme": "Portada (#inicio). Escritorio: la grúa en silueta al ocaso (16:9). Teléfono: la grúa entre edificios con cielo rojo (otra foto, 9:16). También es la base de public/og.jpg (scripts/generar_marca.py).",
+      "origen": "referenciales/portada-grua-ocaso.jpg",
+      "alt": "Grúa torre en silueta contra el cielo del atardecer",
+      "caja": [0, 0, 1, 1],
+      "proporcion": "16:9",
+      "gradacion": "balance",
+      "referencial": true,
+      "placeholder": true,
+      "usos": {
+        "movil": {
+          "origen": "referenciales/portada-grua-atardecer.jpg",
+          "alt": "Grúa torre entre dos edificios con el cielo rojo del atardecer",
+          "caja": [0.25, 0, 0.69, 1],
+          "proporcion": "9:16"
+        }
+      }
+    },
+    "arquitectura-edificio": {
+      "_leeme": "«De plano a realidad» (#plano), la obra terminada: 16:9 en escritorio y 9:16 en el teléfono, cada una con su versión de plano para pasar del plano a la foto.",
+      "origen": "referenciales/arquitectura-edificio.jpg",
+      "alt": "Edificio moderno de terrazas escalonadas, fachada blanca y vidrio oscuro",
+      "caja": [0, 0.02, 1, 0.77],
+      "proporcion": "16:9",
+      "gradacion": "balance",
+      "referencial": true,
+      "placeholder": true,
+      "plano": true,
+      "usos": {
+        "movil": { "caja": [0.41, 0, 0.83, 1], "proporcion": "9:16" },
+        "movil-plano": {
+          "caja": [0.41, 0, 0.83, 1],
+          "proporcion": "9:16",
+          "modoPlano": {},
+          "alt": "Versión de plano: edificio moderno de terrazas escalonadas"
+        }
+      }
+    },
+    "estructura-acero": {
+      "_leeme": "Servicio Ingeniería (cálculo estructural). También en la obra «Estructura de concreto armado».",
+      "origen": "referenciales/estructura-acero.jpg",
+      "alt": "Interior de una jaula de acero de refuerzo vista hacia el cielo",
+      "proporcion": "4:3",
+      "gradacion": "balance",
+      "referencial": true,
+      "usos": {
+        "tarjeta": { "caja": [0.21, 0, 0.81, 1], "proporcion": "4:5" },
+        "ancho": { "caja": [0, 0.265, 1, 0.836], "proporcion": "21:9" }
+      }
+    },
+    "estructura-encofrado": {
+      "_leeme": "Servicio Construcción. También en la obra «Edificio multifamiliar». Parches: el texto «doka 3S basic» de los tableros.",
+      "origen": "referenciales/estructura-encofrado.jpg",
+      "alt": "Obrero colocando el encofrado de una losa, visto desde arriba",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "parches": [
+        {
+          "_leeme": "«basic 3S doka» del tablero de arriba",
+          "poligono": [[0.5838, 0.0625], [0.6747, 0.0463], [0.675, 0.06], [0.5847, 0.0755]],
+          "metodo": "letras",
+          "grosor": 4
+        },
+        {
+          "_leeme": "«doka 3S» del centro",
+          "poligono": [[0.4647, 0.3355], [0.5283, 0.343], [0.5283, 0.3655], [0.4647, 0.353]],
+          "metodo": "letras",
+          "grosor": 5
+        },
+        {
+          "_leeme": "la «c» de «basic», junto al triángulo",
+          "poligono": [[0.552, 0.3593], [0.5592, 0.3593], [0.5592, 0.378], [0.553, 0.378]],
+          "metodo": "letras",
+          "grosor": 4
+        },
+        {
+          "_leeme": "«basic» del borde derecho",
+          "caja": [0.97, 0.278, 1.0, 0.318],
+          "metodo": "letras",
+          "grosor": 4
+        },
+        {
+          "_leeme": "«3S» del triángulo (esquiva sus cantos)",
+          "poligono": [[0.3593, 0.567], [0.3783, 0.567], [0.3745, 0.5855], [0.3645, 0.5855]],
+          "metodo": "letras",
+          "grosor": 4
+        }
+      ],
+      "usos": {
+        "tarjeta": { "caja": [0.04, 0, 0.58, 1], "proporcion": "4:5" },
+        "ancho": { "caja": [0, 0.13, 1, 0.77], "proporcion": "21:9" }
+      }
+    },
+    "remodelacion-bano": {
+      "_leeme": "Servicio Remodelación. También en la obra «Remodelación de apartamento».",
+      "origen": "referenciales/remodelacion-bano.jpg",
+      "alt": "Baño con bañera exenta y ventanas de marco oscuro",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "usos": {
+        "tarjeta": { "caja": [0.283, 0, 0.817, 1], "proporcion": "4:5" },
+        "ancho": { "caja": [0, 0.18, 1, 0.82], "proporcion": "21:9" }
+      }
+    },
+    "asfaltado-pavimentadora": {
+      "_leeme": "Servicio Asfaltado y vialidad. También en la obra «Asfaltado de carretera». Parches: VÖGELE, SUPER 1804 y BOMAG.",
+      "origen": "referenciales/asfaltado-pavimentadora.jpg",
+      "alt": "Pavimentadora y compactadora tendiendo asfalto en una vía, vista desde arriba",
+      "proporcion": "4:3",
+      "gradacion": "balance",
+      "referencial": true,
+      "parches": [
+        {
+          "_leeme": "BOMAG (techo del rodillo del fondo)",
+          "poligono": [[0.2228, 0.1283], [0.2525, 0.1224], [0.2531, 0.1331], [0.2231, 0.1386]],
+          "metodo": "letras",
+          "grosor": 4
+        },
+        {
+          "_leeme": "VÖGELE (toldo de la pavimentadora)",
+          "poligono": [[0.5508, 0.4582], [0.5825, 0.4287], [0.5858, 0.4421], [0.553, 0.4685]],
+          "metodo": "letras",
+          "grosor": 4
+        },
+        {
+          "_leeme": "SUPER 1804 (letras claras del costado)",
+          "poligono": [[0.4597, 0.5494], [0.4997, 0.5779], [0.4987, 0.5917], [0.4593, 0.5618]],
+          "metodo": "letras",
+          "tinta": "clara",
+          "grosor": 5
+        },
+        {
+          "_leeme": "placa con texto en el costado verde",
+          "caja": [0.499, 0.538, 0.525, 0.565],
+          "metodo": "letras",
+          "grosor": 3
+        }
+      ],
+      "usos": {
+        "tarjeta": { "caja": [0.19, 0, 0.77, 1], "proporcion": "4:5" },
+        "ancho": { "caja": [0, 0.325, 1, 0.915], "proporcion": "21:9" }
+      }
+    },
+    "planos-mesa": {
+      "_leeme": "Servicio Proyectos arquitectónicos. También en la obra «Vivienda unifamiliar».",
+      "origen": "referenciales/planos-mesa.jpg",
+      "alt": "Plano de planta con cotas, un portaminas y un escalímetro",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "usos": {
+        "tarjeta": { "caja": [0.233, 0, 0.767, 1], "proporcion": "4:5" },
+        "ancho": { "caja": [0, 0.08, 1, 0.72], "proporcion": "21:9" }
+      }
+    },
+    "estructura-columnas-losas": {
+      "_leeme": "Portada de la obra «Edificio multifamiliar» (destacada: tiene «ancho»).",
+      "origen": "referenciales/estructura-columnas-losas.jpg",
+      "alt": "Edificio de concreto en construcción, con andamios y una grúa torre al atardecer",
+      "proporcion": "4:3",
+      "gradacion": "balance",
+      "referencial": true,
+      "plano": { "detalle": 0.045 },
+      "usos": {
+        "tarjeta": { "caja": [0.18, 0, 0.78, 1], "proporcion": "4:5" },
+        "ancho": { "caja": [0, 0.3, 1, 0.871], "proporcion": "21:9" }
+      }
+    },
+    "equipo-armador": {
+      "_leeme": "Portada de la obra «Estructura de concreto armado».",
+      "origen": "referenciales/equipo-armador.jpg",
+      "alt": "Armador con braga naranja caminando sobre la malla de acero de una losa",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "usos": { "tarjeta": { "caja": [0.303, 0, 0.837, 1], "proporcion": "4:5" } }
+    },
+    "remodelacion-cocina": {
+      "_leeme": "Portada de la obra «Remodelación de cocina».",
+      "origen": "referenciales/remodelacion-cocina.jpg",
+      "alt": "Cocina blanca con isla, lámparas colgantes negras y piso de madera",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "plano": true,
+      "usos": { "tarjeta": { "caja": [0.154, 0, 0.686, 1], "proporcion": "4:5" } }
+    },
+    "remodelacion-cocina-isla": {
+      "_leeme": "Detalle de la misma cocina (2.ª foto de «Remodelación de cocina»).",
+      "origen": "referenciales/remodelacion-cocina.jpg",
+      "alt": "Isla de cocina con taburetes y dos lámparas colgantes negras",
+      "caja": [0.47, 0, 1, 1],
+      "proporcion": "4:5",
+      "gradacion": "balance",
+      "referencial": true
+    },
+    "remodelacion-sala": {
+      "_leeme": "Portada de la obra «Remodelación de apartamento».",
+      "origen": "referenciales/remodelacion-sala.jpg",
+      "alt": "Sala con butaca curva, mesa de piedra y mueble bajo negro",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "plano": { "detalle": 0.045 },
+      "usos": { "tarjeta": { "caja": [0.333, 0, 0.867, 1], "proporcion": "4:5" } }
+    },
+    "asfaltado-via-nueva": {
+      "_leeme": "Portada de la obra «Asfaltado de carretera».",
+      "origen": "referenciales/asfaltado-via-nueva.jpg",
+      "alt": "Carretera de montaña recién asfaltada, con la raya central amarilla",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "plano": { "detalle": 0.04, "suavizado": 9, "desenfoque": 1.8, "histeresis": 0.6 },
+      "usos": { "tarjeta": { "caja": [0.394, 0, 0.926, 1], "proporcion": "4:5" } }
+    },
+    "asfaltado-compactadora": {
+      "_leeme": "Portada de la obra «Vialidad urbana». Parches: CATERPILLAR, CAT y dos avisos viales en inglés.",
+      "origen": "referenciales/asfaltado-compactadora.jpg",
+      "alt": "Rodillo compactador y cuadrilla tendiendo asfalto en una vía urbana",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "plano": { "detalle": 0.04, "suavizado": 9, "desenfoque": 1.8, "histeresis": 0.6 },
+      "parches": [
+        {
+          "_leeme": "CATERPILLAR (calcomanía del rodillo)",
+          "caja": [0.317, 0.509, 0.374, 0.53],
+          "metodo": "letras",
+          "tinta": "clara",
+          "grosor": 4
+        },
+        {
+          "_leeme": "CAT (minicargador)",
+          "caja": [0.692, 0.503, 0.709, 0.52],
+          "metodo": "letras",
+          "tinta": "clara",
+          "grosor": 5
+        },
+        {
+          "_leeme": "aviso vial en inglés (texto gris fino; grosor 2 para no borrar las varillas que lo cruzan)",
+          "caja": [0.247, 0.338, 0.303, 0.405],
+          "metodo": "letras",
+          "grosor": 2,
+          "umbral": 14
+        },
+        {
+          "_leeme": "aviso marrón BLM-USFS OFFICE",
+          "caja": [0.418, 0.322, 0.483, 0.362],
+          "metodo": "letras",
+          "tinta": "clara",
+          "grosor": 4
+        }
+      ],
+      "usos": { "tarjeta": { "caja": [0.183, 0, 0.717, 1], "proporcion": "4:5" } }
+    },
+    "arquitectura-casa": {
+      "_leeme": "Portada de la obra «Vivienda unifamiliar».",
+      "origen": "referenciales/arquitectura-casa.jpg",
+      "alt": "Casa contemporánea de bloque de concreto a la vista entre árboles",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "usos": { "tarjeta": { "caja": [0.183, 0, 0.717, 1], "proporcion": "4:5" } }
+    },
+    "arquitectura-fachada": {
+      "_leeme": "Portada de la obra «Diseño de fachada». La mejor para el comparador «Plano / Obra».",
+      "origen": "referenciales/arquitectura-fachada.jpg",
+      "alt": "Fachada blanca de un edificio residencial, con bandas de ventanas y un balcón",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "plano": true,
+      "usos": { "tarjeta": { "caja": [0.283, 0, 0.817, 1], "proporcion": "4:5" } }
+    },
+    "equipo-ingenieros-planos": {
+      "_leeme": "3.ª foto de «Asfaltado de carretera» (panorámica 2:1). Parche: logo de un chaleco.",
+      "origen": "referenciales/equipo-ingenieros-planos.jpg",
+      "alt": "Ingenieros con casco revisando planos frente a un corte de roca",
+      "proporcion": "2:1",
+      "gradacion": "balance",
+      "referencial": true,
+      "parches": [
+        {
+          "_leeme": "logo de empresa en el chaleco rojo",
+          "caja": [0.6245, 0.4877, 0.6455, 0.4993],
+          "metodo": "letras",
+          "tinta": "clara",
+          "grosor": 3
+        }
+      ]
+    },
+    "maquinaria-retroexcavadora": {
+      "_leeme": "2.ª foto de «Vialidad urbana». Parches: los tres «JCB».",
+      "origen": "referenciales/maquinaria-retroexcavadora.jpg",
+      "alt": "Retroexcavadora amarilla sobre la grama, entre palmeras",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "parches": [
+        {
+          "_leeme": "calcomanía JCB del brazo trasero: se quita entera (amarillo difundido)",
+          "poligono": [[0.1363, 0.4655], [0.1475, 0.4563], [0.1642, 0.5288], [0.1538, 0.538]],
+          "metodo": "difundir",
+          "suave": 6
+        },
+        {
+          "_leeme": "JCB del brazo del cargador",
+          "poligono": [[0.29, 0.5233], [0.305, 0.5283], [0.305, 0.5525], [0.29, 0.547]],
+          "metodo": "letras",
+          "tinta": "clara",
+          "grosor": 4
+        },
+        {
+          "_leeme": "placa JCB de la parrilla: rejilla clonada de abajo",
+          "caja": [0.3788, 0.6113, 0.3962, 0.626],
+          "metodo": "clonar",
+          "desde": [0, 0.017],
+          "suave": 4
+        }
+      ]
+    },
+    "maquinaria-excavadora": {
+      "_leeme": "3.ª foto de «Vialidad urbana» y fondo opcional de #cotiza (abajo es casi negra).",
+      "origen": "referenciales/maquinaria-excavadora.jpg",
+      "alt": "Excavadora en silueta a contraluz del sol",
+      "proporcion": "16:9",
+      "gradacion": "balance",
+      "referencial": true,
+      "usos": { "movil": { "caja": [0.42, 0, 0.74, 1], "proporcion": "9:16" } }
+    },
+    "planos-herramientas": {
+      "_leeme": "2.ª foto de «Diseño de fachada». Foco solo en la mitad de abajo: de fondo o en tarjeta, no a pantalla completa.",
+      "origen": "referenciales/planos-herramientas.jpg",
+      "alt": "Transportador y escuadra sobre un plano",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true
+    },
+    "equipo-obreros": {
+      "_leeme": "#nosotros (equipo en obra: NO es el ingeniero) y 3.ª foto de «Edificio multifamiliar». Rostros cubiertos.",
+      "origen": "referenciales/equipo-obreros.jpg",
+      "alt": "Tres obreros con casco amarrando el acero de una losa",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "usos": {
+        "tarjeta": { "caja": [0.253, 0, 0.787, 1], "proporcion": "4:5" },
+        "ancho": { "caja": [0, 0.1, 1, 0.743], "proporcion": "21:9" }
+      }
+    },
+    "portada-gruas-hora-azul": {
+      "_leeme": "#contacto: la ciudad con sus grúas al anochecer («ancho» 21:9 en escritorio, «movil» 9:16).",
+      "origen": "referenciales/portada-gruas-hora-azul.jpg",
+      "alt": "Grúas torre sobre la ciudad al anochecer",
+      "proporcion": "3:2",
+      "gradacion": "balance",
+      "referencial": true,
+      "usos": {
+        "ancho": { "caja": [0, 0.229, 1, 0.871], "proporcion": "21:9" },
+        "movil": { "caja": [0.3925, 0, 0.7675, 1], "proporcion": "9:16" }
+      }
+    }
+  },
+  "_ejemplo_fotos": {
+    "_leeme": "Copia una entrada como esta dentro de «fotos» (sin el «_» del nombre). «usos»: recortes alternativos de la misma foto, que se piden como <Foto id=\"portada\" uso=\"tarjeta\" /> o, para el teléfono, <Foto id=\"portada\" movil=\"movil\" rellenar />. Un uso puede traer su propio «origen» (otra foto: entonces también su «alt»). Los créditos NO van aquí: salen de fotos_originales/referenciales/creditos.json.",
+    "portada": {
+      "origen": "referenciales/nombre-del-archivo.jpg",
+      "alt": "Estructura de concreto de un edificio en construcción al atardecer",
+      "caja": [0, 0.08, 1, 0.92],
+      "proporcion": "16:9",
+      "gradacion": "balance",
+      "referencial": true,
+      "usos": { "movil": { "caja": [0.3, 0, 0.78, 1], "proporcion": "9:16" }, "tarjeta": { "proporcion": "4:5" } },
+      "parches": [
+        {
+          "_leeme": "opcional: tapa un letrero o una marca ajena (metodo: clonar | interpolar | difundir | color)",
+          "caja": [0.62, 0.7, 0.71, 0.76],
+          "metodo": "clonar",
+          "desde": [-0.1, 0]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,655 @@
+/*
+ * Estilos base de Balance Obras Civiles («Hormigón y oro», brief §3): fuentes, tokens y las clases
+ * compartidas (.contenedor, .seccion, .etiqueta, .anotacion, .titulo-display, .titulo-seccion,
+ * .boton…, .textura-concreto, .texto-concreto, .texto-oro, .grano…). El resto, con utilidades de
+ * Tailwind. Los colores se definen en tailwind.config.js y aquí se exponen como variables CSS
+ * (--carbon, --oro…) para usarlos en CSS propio o en style={{}}.
+ */
+
+/* ── Fuentes autoalojadas (fontsource), solo el subconjunto latino: el español no necesita más ── */
+
+/* Michroma: ancha y técnica, emparentada con el wordmark. Etiquetas, cotas, anotaciones, cifras. */
+@font-face {
+  font-family: 'Michroma';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('@fontsource/michroma/files/michroma-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Archivo «expandida»: la Archivo variable de fontsource con la anchura FIJA en 125 % y solo el eje
+   de peso (500–900), 32 KB (scripts/generar_fuente_expandida.py). Se ve igual en todos los motores,
+   sin depender de font-stretch, y pesa la tercera parte que la variable completa. */
+@font-face {
+  font-family: 'Archivo Expandida';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500 900;
+  src: url('./assets/fuentes/archivo-expandida-latin-wght.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* La Archivo de fontsource con TODO su eje de anchura (62–125 %), para cuando haga falta otra:
+   font-archivo + .ancho-100 / .ancho-112 / .ancho-125 o [font-stretch:75%]. Son 90 KB más: solo se
+   descargan si algo la usa. */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url('@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Paleta (la fuente es tailwind.config.js) */
+    --carbon: theme('colors.carbon');
+    --hormigon: theme('colors.hormigon.DEFAULT');
+    --hormigon-claro: theme('colors.hormigon.claro');
+    --concreto: theme('colors.concreto.DEFAULT');
+    --concreto-claro: theme('colors.concreto.claro');
+    --hueso: theme('colors.hueso');
+    --oro: theme('colors.oro.DEFAULT');
+    --oro-claro: theme('colors.oro.claro');
+    --oro-medio: theme('colors.oro.medio');
+    --oro-oscuro: theme('colors.oro.oscuro');
+    --plano: theme('colors.plano.DEFAULT');
+    --plano-profundo: theme('colors.plano.profundo');
+    --plano-linea: theme('colors.plano.linea');
+
+    /* El degradado del oro (brief §3) y el del concreto, listos para background-image */
+    --degradado-oro: linear-gradient(135deg, #e8cc8e 0%, #c9a45c 38%, #b08a45 66%, #8a6a33 100%);
+    --degradado-concreto: linear-gradient(180deg, #dcdedf 0%, #b7babc 55%, #8e9193 100%);
+
+    /* Movimiento (los mismos valores que src/lib/movimiento.js) */
+    --expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --suave: cubic-bezier(0.22, 1, 0.36, 1);
+    --viga: cubic-bezier(0.65, 0, 0.35, 1);
+
+    /* Retícula: margen lateral, aire entre secciones y alto de la barra de navegación */
+    --margen: 20px;
+    --aire: 96px;
+    --alto-nav: 64px;
+
+    /* Forma de los botones: aristas casi vivas, como una pieza de acero. Cambiarla aquí cambia todos. */
+    --radio-boton: 2px;
+
+    color-scheme: dark;
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --margen: 48px;
+      --aire: 160px;
+      --alto-nav: 80px;
+    }
+  }
+
+  html {
+    background-color: var(--carbon);
+    color: var(--hueso);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    /* Reserva el canal de la barra: al bloquear el scroll (menú, visor) la página no salta. */
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(201 164 92 / 0.55) transparent;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: theme('fontFamily.sans');
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 400;
+    background-color: var(--carbon);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 1.0625rem;
+    }
+  }
+
+  /* Las anclas no quedan debajo de la barra fija al saltar a ellas. */
+  section[id] {
+    scroll-margin-top: calc(var(--alto-nav) - 1px);
+  }
+
+  ::selection {
+    background-color: var(--oro);
+    color: var(--carbon);
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(201 164 92 / 0.5);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--oro-claro);
+    outline-offset: 3px;
+  }
+
+  img,
+  svg,
+  video {
+    -webkit-user-drag: none;
+  }
+}
+
+@layer components {
+  /* Ancho máximo de 1320 px con el margen lateral de la retícula (20 px en el teléfono, 48 en escritorio). */
+  .contenedor {
+    width: 100%;
+    max-width: calc(1320px + 2 * var(--margen));
+    margin-inline: auto;
+    padding-inline: var(--margen);
+  }
+
+  /* Aire vertical estándar de una sección: 96 px en el teléfono, 160 px en escritorio. */
+  .seccion {
+    padding-block: var(--aire);
+  }
+
+  /* Rótulo pequeño en Michroma, mayúsculas espaciadas (sobre títulos, chips, numeración, pasos). */
+  .etiqueta {
+    font-family: theme('fontFamily.marca');
+    font-size: 0.625rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 768px) {
+    .etiqueta {
+      font-size: 0.6875rem;
+    }
+  }
+
+  /* Anotación técnica de plano («N+3.20», «Ø12 @ 20 cm», «Escala 1:100»): Michroma chica, sin
+     mayúsculas forzadas (las unidades van en minúscula), cifras tabulares. */
+  .anotacion {
+    font-family: theme('fontFamily.marca');
+    font-size: 0.5625rem;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .anotacion {
+      font-size: 0.625rem;
+    }
+  }
+
+  /* Titular gigante (el de la portada): Archivo expandida 800, mayúsculas, apretado de interlínea.
+     8,2vw: una palabra de 12 letras (CONSTRUCCIÓN = 10,9 em) cabe a lo ancho hasta en 360 px. */
+  .titulo-display {
+    font-family: theme('fontFamily.display');
+    font-weight: 800;
+    font-size: clamp(1.75rem, 8.2vw, 7.5rem);
+    line-height: 0.9;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  /* Título de sección: la misma Archivo expandida, un escalón más chica y un poco menos pesada.
+     7vw: 12 letras ocupan ~85 % del ancho en el teléfono. */
+  .titulo-seccion {
+    font-family: theme('fontFamily.display');
+    font-weight: 750;
+    font-size: clamp(1.5rem, 7vw, 5.25rem);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  /* Subtítulo / titular de tarjeta: Archivo expandida 700. Ojo en tarjetas angostas: 12 letras
+     (CONSTRUCCIÓN) miden 10,9 em → 240 px a 22 px; baja el tamaño o parte la palabra en otra línea. */
+  .titulo-bloque {
+    font-family: theme('fontFamily.display');
+    font-weight: 700;
+    font-size: clamp(1.05rem, 0.75rem + 1.2vw, 1.375rem);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  /* Énfasis (*así* en balance.js y en <TextoDividido>/<Enfasis>): oro y SIN cursiva (Archivo
+     expandida no la trae: el navegador la inclinaría a la fuerza). */
+  .enfasis {
+    color: var(--oro);
+    font-style: normal;
+  }
+
+  /* Énfasis con el degradado del oro (titulares grandes). Combínalo con .titulo-*: claseEnfasis="texto-oro". */
+  .texto-oro {
+    font-style: normal;
+    background-image: var(--degradado-oro);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Letras huecas: solo el contorno (combínalo con .titulo-display/.titulo-seccion). */
+  .texto-contorno {
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: max(1px, 0.012em) var(--concreto-claro);
+  }
+
+  .texto-contorno-oro {
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: max(1px, 0.012em) var(--oro);
+  }
+
+  /*
+   * Letras rellenas de concreto: el degradado gris con el grano de la textura (el wordmark gigante
+   * del pie, cifras enormes). Va con background-clip: text; el color de reserva es concreto.
+   */
+  .texto-concreto {
+    background-color: var(--concreto-claro);
+    background-image: var(--textura-concreto), var(--degradado-concreto);
+    background-size: 220px 220px, 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Superficie de concreto (tarjetas, franjas): hormigón con poros y manchas muy suaves. */
+  .textura-concreto {
+    background-color: var(--hormigon);
+    background-image: var(--textura-concreto);
+    background-size: 220px 220px;
+  }
+
+  /* Filete: línea fina dorada (horizontal por defecto; dale ancho o alto con utilidades). */
+  .filete {
+    display: block;
+    height: 1px;
+    background-color: rgb(201 164 92 / 0.5);
+  }
+
+  .filete-degradado {
+    display: block;
+    height: 1px;
+    background-image: linear-gradient(90deg, var(--oro), rgb(201 164 92 / 0));
+  }
+
+  /*
+   * Botones: 52 px de alto (cómodo con el pulgar), aristas casi vivas, mayúsculas espaciadas y un
+   * relleno que sube al pasar el cursor. Siempre .boton + una variante:
+   *   .boton-oro (degradado dorado, la acción principal: «Cotiza tu obra») ·
+   *   .boton-linea (borde fino, secundaria: «Ver obras») · .boton-hueso (claro, sobre fotos).
+   *   .boton-chico: 40 px de alto (navegación).
+   * Pon el texto en un <span> y, si quieres, un icono de lucide (size-4) al lado.
+   */
+  .boton {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7em;
+    min-height: 52px;
+    padding: 0.9em 1.7em;
+    border-radius: var(--radio-boton);
+    font-family: theme('fontFamily.sans');
+    font-size: 0.8125rem;
+    font-weight: 650;
+    line-height: 1.1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    user-select: none;
+    cursor: pointer;
+    transition:
+      color 0.35s var(--suave),
+      background-color 0.35s var(--suave),
+      box-shadow 0.35s var(--suave),
+      transform 0.35s var(--suave);
+  }
+
+  /* Relleno que sube al pasar el cursor. */
+  .boton::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: var(--hueso);
+    transform: translateY(101%);
+    transition: transform 0.55s var(--expo);
+  }
+
+  .boton:active {
+    transform: scale(0.97);
+  }
+
+  .boton:disabled,
+  .boton[aria-disabled='true'] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .boton-chico {
+    min-height: 40px;
+    padding: 0.7em 1.15em;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+  }
+
+  .boton-oro {
+    background-color: var(--oro);
+    background-image: var(--degradado-oro);
+    color: var(--carbon);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.28),
+      0 18px 40px -18px rgb(201 164 92 / 0.55);
+  }
+
+  /* Destello que cruza el oro al pasar el cursor (oro cepillado). */
+  .boton-oro::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.45) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 0.9s var(--expo);
+  }
+
+  .boton-oro::before {
+    background-color: var(--oro-claro);
+  }
+
+  .boton-hueso {
+    background-color: var(--hueso);
+    color: var(--carbon);
+  }
+
+  .boton-hueso::before {
+    background-color: var(--oro);
+  }
+
+  .boton-linea {
+    background-color: transparent;
+    color: var(--hueso);
+    box-shadow: inset 0 0 0 1px rgb(236 234 229 / 0.35);
+  }
+
+  .boton-linea::before {
+    background-color: var(--oro);
+  }
+
+  @media (hover: hover) {
+    .boton:hover::before {
+      transform: translateY(0);
+    }
+    .boton-oro:hover::after {
+      transform: translateX(120%);
+    }
+    .boton-linea:hover {
+      color: var(--carbon);
+      box-shadow: inset 0 0 0 1px transparent;
+    }
+  }
+
+  /* Máscara para revelar texto desde abajo (<TextoDividido>). Deja aire a las tildes de las
+     mayúsculas (CONSTRUCCIÓN, INGENIERÍA) y a los descendentes. */
+  .mascara {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding: 0.2em 0.06em 0.12em;
+    margin: -0.2em -0.06em -0.12em;
+  }
+
+  /* <Foto>: el placeholder borroso es el fondo; la foto se funde encima al cargar. */
+  .foto {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .foto--rellenar {
+    position: absolute;
+    inset: 0;
+  }
+
+  .foto__capa {
+    position: absolute;
+    inset: 0;
+  }
+
+  .foto__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s var(--suave);
+  }
+
+  .foto__img.is-cargada {
+    opacity: 1;
+  }
+
+  /* Viñeta (<Foto vineta>): oscurece los bordes con el carbón de la página. Va sobre la imagen. */
+  .foto--vineta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 90% at 50% 40%, rgb(17 18 19 / 0) 50%, rgb(17 18 19 / 0.6) 100%),
+      linear-gradient(180deg, rgb(17 18 19 / 0) 60%, rgb(17 18 19 / 0.4) 100%);
+  }
+
+  /* Foto que todavía no está en src/data/fotos.json: un recuadro de plano, no un hueco. */
+  .foto--pendiente {
+    background-color: var(--plano-profundo);
+    background-image:
+      linear-gradient(rgb(111 164 219 / 0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(111 164 219 / 0.16) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: -1px -1px;
+  }
+
+  /* Grano (<Grano>): ruido SVG muy liviano encima de todo, sin capturar el puntero. Motas blancas
+     con alfa contrastado: al 5 % se nota la textura y el carbón apenas se aclara. El ruido va en
+     ::before, más grande que la capa, para que .grano--vivo lo mueva con transform. */
+  .grano {
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .grano::before {
+    content: '';
+    position: absolute;
+    inset: -96px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 3 0 0 0 -1.25'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  .grano--vivo::before {
+    animation: grano-saltar 0.8s steps(1, end) infinite;
+  }
+
+  /* Oculta la barra de un carrusel horizontal (sigue funcionando con el dedo y la rueda). */
+  .sin-barra {
+    scrollbar-width: none;
+  }
+  .sin-barra::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Cursor propio: solo cuando <Cursor> está activo (puntero fino). */
+  .con-cursor,
+  .con-cursor * {
+    cursor: none !important;
+  }
+
+  .con-cursor :is(input:not([type='checkbox'], [type='radio'], [type='range']), textarea, [contenteditable]) {
+    cursor: text !important;
+  }
+
+  /* Iconos de línea que se trazan (<Icono trazar>): cada trazo lleva pathLength="1". Ocultos del
+     todo antes de empezar: un trazo de largo 0 con remate redondo pinta un punto. */
+  .icono-trazable .icono__trazo {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    opacity: 0;
+    transition:
+      stroke-dashoffset 1.1s var(--expo) calc(var(--i, 0) * 0.09s + var(--retraso, 0s)),
+      opacity 0.12s linear calc(var(--i, 0) * 0.09s + var(--retraso, 0s));
+  }
+
+  .icono-trazable.is-trazado .icono__trazo {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@layer utilities {
+  /* Anchura de Archivo con font-archivo (font-display ya es la expandida, siempre). */
+  .ancho-100 {
+    font-stretch: 100%;
+  }
+  .ancho-112 {
+    font-stretch: 112%;
+  }
+  .ancho-125 {
+    font-stretch: 125%;
+  }
+}
+
+/*
+ * Textura de concreto: dos capas de ruido (poros finos y manchas grandes) en escala de grises con
+ * poco alfa. Sola sobre hormigón (.textura-concreto) o recortada en letras (.texto-concreto).
+ */
+:root {
+  --textura-concreto: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.032' numOctaves='3' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.8 0 0 0 -0.34'/%3E%3C/filter%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -6 0 0 0 2.3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url%28%23m%29' opacity='0.32'/%3E%3Crect width='220' height='220' filter='url%28%23p%29' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+@keyframes grano-saltar {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-53px, 31px, 0);
+  }
+  50% {
+    transform: translate3d(37px, -61px, 0);
+  }
+  75% {
+    transform: translate3d(-21px, -37px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grano--vivo::before {
+    animation: none;
+  }
+
+  .foto__img {
+    transition-duration: 0.3s;
+  }
+
+  .icono-trazable .icono__trazo {
+    transition: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+/* Deslizador de m² del cotizador: riel fino y asa de oro (táctil: 28 px de asa). */
+.deslizador-oro {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+.deslizador-oro::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(90deg, var(--oro) 0%, rgb(236 234 229 / 0.15) 100%);
+}
+.deslizador-oro::-moz-range-track {
+  height: 2px;
+  background: rgb(236 234 229 / 0.15);
+}
+.deslizador-oro::-moz-range-progress {
+  height: 2px;
+  background: var(--oro);
+}
+.deslizador-oro::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  margin-top: -13px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 35%, #e8cc8e, #c9a45c 55%, #8a6a33);
+  box-shadow: 0 0 0 6px rgb(201 164 92 / 0.15), 0 6px 16px rgb(0 0 0 / 0.45);
+}
+.deslizador-oro::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 35%, #e8cc8e, #c9a45c 55%, #8a6a33);
+  box-shadow: 0 0 0 6px rgb(201 164 92 / 0.15), 0 6px 16px rgb(0 0 0 / 0.45);
+}
+.deslizador-oro:focus-visible {
+  outline: none;
+}
+.deslizador-oro:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px var(--carbon), 0 0 0 5px var(--oro-claro);
+}

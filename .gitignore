@@ -1,0 +1,27 @@
+# Dependencias y salida del build
+node_modules
+dist
+dist-ssr
+
+# Cachés de los servidores de desarrollo (BAL_CACHE=.vite-…) y capturas/pruebas de revisión
+.vite
+.vite-*
+.capturas
+
+# Registros
+*.log
+npm-debug.log*
+
+# Entorno local
+*.local
+.env*
+.vercel
+
+# Editor y sistema
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.sw?
+__pycache__
