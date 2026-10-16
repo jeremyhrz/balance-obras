@@ -8,7 +8,8 @@ import { enlaceWhatsApp, mensajeGeneral } from '../lib/whatsapp'
 /**
  * Botón flotante «Cotiza tu obra» (brief §5.12), con WhatsApp como acceso secundario.
  * Aparece al pasar la portada (#inicio; sin portada, tras 0,8 pantallas) y se aparta mientras
- * #cotiza o el pie están en pantalla: así nunca tapa «Enviar por WhatsApp». z-flotante (45).
+ * #cotiza, el pie o el escenario de #plano están en pantalla: así nunca tapa «Enviar por WhatsApp» ni el
+ * contador «Obra al %». z-flotante (45).
  * STUB de la base, ya funcional; la sección puede pulir el diseño.
  */
 export default function CotizarFlotante() {
@@ -65,7 +66,9 @@ function useVisible() {
       }
       const cotiza = enPantalla(document.getElementById('cotiza'), alto * 0.12)
       const pie = enPantalla(document.querySelector('footer'), 40)
-      setVisible(paso && !cotiza && !pie)
+      // En «De plano a realidad» el escenario fijo tiene abajo el contador «Obra al %»: no se tapa.
+      const plano = enPantalla(document.getElementById('plano'), alto * 0.5)
+      setVisible(paso && !cotiza && !pie && !plano)
     }
     const pedir = () => {
       if (!cuadro) cuadro = window.requestAnimationFrame(medir)
