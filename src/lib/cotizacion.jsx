@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { buscarTipoObra } from '../data/balance.js'
-import { irA } from './scroll'
+import { navegar } from './rutas'
 
 /**
  * Estado compartido del cotizador: qué tipo de obra está elegido y cómo llevar a alguien a
@@ -8,12 +8,12 @@ import { irA } from './scroll'
  * botón flotante, la portada).
  *
  *   const { tipoId, tipo, elegirTipo, irACotizar, peticion } = useCotizacion()
- *   <button onClick={() => irACotizar('remodelacion')}>Cotizar una remodelación</button>  marca el tipo y baja a #cotiza
- *   <button onClick={() => irACotizar()}>Cotiza tu obra</button>                           solo baja a #cotiza
+ *   <button onClick={() => irACotizar('remodelacion')}>Cotizar una remodelación</button>  marca el tipo y lleva a /cotiza
+ *   <button onClick={() => irACotizar()}>Cotiza tu obra</button>                           solo lleva a /cotiza
  *
  * - `tipoId`: id de TIPOS_OBRA (los de SERVICIOS + 'otro') o null · `tipo`: el objeto o null.
  * - `elegirTipo(id)`: marca un tipo (null lo desmarca) sin mover el scroll: lo usa el paso 1.
- * - `irACotizar(id?)`: con id, lo marca y sube `peticion`; luego lleva el scroll a #cotiza.
+ * - `irACotizar(id?)`: con id, lo marca y sube `peticion`; luego lleva a la página /cotiza (con la cortina).
  *   Pásala directo a onClick sin miedo: si recibe el evento en vez de un id, lo ignora.
  * - `peticion`: número que sube cada vez que otra sección pide cotizar un tipo concreto. El
  *   asistente lo escucha (useEffect sobre `peticion`) para saltar directo al paso 2 (ubicación).
@@ -34,7 +34,7 @@ export function ProveedorCotizacion({ children }) {
       setTipoId(id)
       setPeticion((n) => n + 1)
     }
-    irA('#cotiza')
+    navegar('cotiza')
   }, [])
 
   const valor = useMemo(
@@ -57,6 +57,6 @@ const SIN_PROVEEDOR = {
   tipoId: null,
   tipo: null,
   elegirTipo: () => {},
-  irACotizar: () => irA('#cotiza'),
+  irACotizar: () => navegar('cotiza'),
   peticion: 0,
 }

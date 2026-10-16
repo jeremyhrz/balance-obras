@@ -36,6 +36,7 @@ export default function Cotiza() {
   const [ubicacion, setUbicacion] = useState('')
   const [tamano, setTamano] = useState(TAMANO.inicial)
   const [sinTamano, setSinTamano] = useState(false)
+  const [tamanoElegido, setTamanoElegido] = useState(false)
   const [plazo, setPlazo] = useState(null)
   const [detalles, setDetalles] = useState('')
   const [nombre, setNombre] = useState('')
@@ -58,7 +59,7 @@ export default function Cotiza() {
   const datos = {
     tipo: tipoId,
     ubicacion: ubicacion.trim(),
-    tamano: sinTamano ? null : tamano,
+    tamano: sinTamano || !tamanoElegido ? null : tamano,
     plazo,
     detalles: detalles.trim(),
     nombre: nombre.trim(),
@@ -82,10 +83,10 @@ export default function Cotiza() {
         <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <Rotulo id="cotiza" />
-            <TextoDividido como="h2" texto={'Cotiza tu\n*obra*'} className="titulo-seccion mt-6" claseEnfasis="texto-oro" />
+            <TextoDividido como="h1" texto={'Cotiza tu\n*obra*'} className="titulo-pagina mt-6" claseEnfasis="texto-oro" />
           </div>
-          <Revelar como="p" className="max-w-md text-hueso/75 lg:text-right">
-            Cinco pasos y armamos la ficha de tu obra. Te llega lista a WhatsApp para coordinar una visita.
+          <Revelar como="p" className="texto-lead max-w-md lg:text-right">
+            Cinco pasos y armamos <em>la ficha de tu obra</em>. Sale lista por WhatsApp para coordinar una visita.
           </Revelar>
         </div>
 
@@ -95,7 +96,7 @@ export default function Cotiza() {
             <div className="flex items-center justify-between gap-4">
               <p className="etiqueta text-oro">Paso {paso + 1} de {PASOS.length} · {PASOS[paso]}</p>
               {paso > 0 && (
-                <button type="button" onClick={() => ir(paso - 1)} className="etiqueta inline-flex items-center gap-1.5 text-hueso/70 hover:text-hueso">
+                <button type="button" onClick={() => ir(paso - 1)} className="etiqueta -my-3 inline-flex min-h-[44px] items-center gap-1.5 text-hueso/70 hover:text-hueso">
                   <ArrowLeft className="size-3.5" strokeWidth={1.5} /> Atrás
                 </button>
               )}
@@ -182,7 +183,7 @@ export default function Cotiza() {
                         min={0}
                         max={POSICIONES}
                         value={posicionDesdeTamano(tamano)}
-                        onChange={(e) => { setSinTamano(false); setTamano(tamanoDesdePosicion(+e.target.value)) }}
+                        onChange={(e) => { setSinTamano(false); setTamanoElegido(true); setTamano(tamanoDesdePosicion(+e.target.value)) }}
                         aria-valuetext={formatearArea(tamano)}
                         className="deslizador-oro mt-6 w-full"
                       />
@@ -191,7 +192,7 @@ export default function Cotiza() {
                         <span>{formatearArea(TAMANO.max)}</span>
                       </div>
                       <div className="mt-8 flex flex-wrap gap-3">
-                        <button type="button" onClick={() => ir(3)} className="boton boton-oro boton-chico">
+                        <button type="button" onClick={() => { setTamanoElegido(true); ir(3) }} className="boton boton-oro boton-chico">
                           <span>Siguiente</span>
                           <ArrowRight className="size-4" strokeWidth={1.5} />
                         </button>
@@ -272,7 +273,7 @@ export default function Cotiza() {
                   </div>
                 ))}
               </dl>
-              <BotonWhatsApp variante="oro" mensaje={mensaje} className={clsx('mt-5 w-full justify-center', !listo && 'pointer-events-none opacity-40')} aria-disabled={!listo}>
+              <BotonWhatsApp variante="oro" mensaje={mensaje} className={clsx('mt-5 w-full justify-center', !listo && 'pointer-events-none opacity-40')} aria-disabled={!listo} tabIndex={listo ? 0 : -1} onClick={(e) => { if (!listo) e.preventDefault() }}>
                 Enviar por WhatsApp
               </BotonWhatsApp>
               <p className="anotacion mt-3 text-center text-hueso/45">

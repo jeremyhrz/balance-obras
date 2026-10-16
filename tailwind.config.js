@@ -51,6 +51,8 @@ export default {
         // La Archivo de fontsource con su anchura variable (100 % por defecto; .ancho-112, .ancho-125…). +90 KB.
         archivo: ['Archivo', '"Arial Narrow"', 'system-ui', 'sans-serif'],
         sans: ['"Inter Variable"', 'system-ui', '-apple-system', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        // Instrument Serif: textos editoriales (.texto-lead, .texto-serif), citas.
+        serif: ['"Instrument Serif"', 'Georgia', '"Times New Roman"', 'serif'],
       },
       fontSize: {
         // Archivo expandida en mayúsculas: titular de la portada, de sección y del menú móvil.

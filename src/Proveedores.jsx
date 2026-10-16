@@ -1,5 +1,6 @@
 import { LazyMotion, MotionConfig, domAnimation } from 'framer-motion'
 import { ProveedorCotizacion } from './lib/cotizacion'
+import { ProveedorRutas } from './lib/rutas'
 import { ProveedorScroll } from './lib/scroll'
 
 /**
@@ -20,7 +21,9 @@ export default function Proveedores({ children }) {
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
         <ProveedorScroll>
-          <ProveedorCotizacion>{children}</ProveedorCotizacion>
+          <ProveedorRutas>
+            <ProveedorCotizacion>{children}</ProveedorCotizacion>
+          </ProveedorRutas>
         </ProveedorScroll>
       </MotionConfig>
     </LazyMotion>

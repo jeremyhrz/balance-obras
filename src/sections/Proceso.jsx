@@ -32,9 +32,9 @@ export default function Proceso() {
       <div className="contenedor seccion grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         <div className="lg:sticky lg:top-[calc(var(--alto-nav)+3rem)] lg:self-start">
           <Rotulo id="proceso" />
-          <TextoDividido como="h2" texto={'Paso a paso,\n*a plomo*'} className="titulo-seccion mt-6" />
-          <p className="mt-6 max-w-md text-hueso/75">
-            Una obra derecha se construye en orden. Así trabajamos, de la primera visita a la entrega.
+          <TextoDividido como="h1" texto={'Paso a paso,\n*a plomo*'} className="titulo-pagina mt-6" />
+          <p className="texto-lead mt-6 max-w-md">
+            Una obra derecha se construye <em>en orden</em>. Así trabajamos, de la primera visita a la entrega.
           </p>
         </div>
 
@@ -68,7 +68,7 @@ export default function Proceso() {
                 <h3 className={clsx('titulo-bloque mt-2 transition-colors duration-500', encendido ? 'text-hueso' : 'text-hueso/45')}>
                   {paso.titulo}
                 </h3>
-                <p className={clsx('mt-2 max-w-xl transition-colors duration-500', encendido ? 'text-hueso/80' : 'text-hueso/35')}>
+                <p className={clsx('texto-serif mt-2 max-w-xl transition-colors duration-500', encendido ? 'text-hueso/85' : 'text-hueso/35')}>
                   {paso.texto}
                 </p>
               </li>

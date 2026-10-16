@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import clsx from 'clsx'
 import { AnimatePresence, m, useMotionValueEvent, useScroll } from 'framer-motion'
 import { X } from 'lucide-react'
+import Enlace from '../components/Enlace'
 import { IconoWhatsApp } from '../components/Iconos'
 import Logo from '../components/Logo'
 import Magnetico from '../components/Magnetico'
@@ -12,20 +13,20 @@ import { useCotizacion } from '../lib/cotizacion'
 import { useAtraparFoco } from '../lib/foco'
 import { useIntroTerminada } from '../lib/intro'
 import { EXPO } from '../lib/movimiento'
-import { alClicAncla, irA, useBloquearScroll } from '../lib/scroll'
-import { useSeccionActiva } from '../lib/seccionActiva'
+import { useRutas } from '../lib/rutas'
+import { useBloquearScroll } from '../lib/scroll'
 import { enlaceWhatsApp, mensajeGeneral } from '../lib/whatsapp'
 
 /**
  * Navegación (brief §5.2): barra fija con el logo horizontal y «Cotiza tu obra» siempre visible; se
- * esconde al bajar y vuelve al subir. En escritorio ancho, los enlaces con la sección activa en oro.
- * En el resto, un botón abre el MENÚ a pantalla completa: retícula de plano de fondo, enlaces enormes
- * numerados que entran escalonados, y WhatsApp abajo. Esc cierra, el foco queda dentro y el scroll se bloquea.
+ * esconde al bajar y vuelve al subir. Cada enlace lleva a su PÁGINA (src/lib/rutas.jsx) y la actual
+ * va en oro. En escritorio ancho, los enlaces a la vista; en el resto, el MENÚ a pantalla completa:
+ * retícula de plano, enlaces enormes numerados que entran escalonados y WhatsApp abajo.
  */
 export default function Navegacion() {
   const listo = useIntroTerminada()
   const { irACotizar } = useCotizacion()
-  const activa = useSeccionActiva()
+  const { pagina } = useRutas()
   const [oculta, setOculta] = useState(false)
   const [solida, setSolida] = useState(false)
   const [menu, setMenu] = useState(false)
@@ -60,29 +61,27 @@ export default function Navegacion() {
           animate={listo ? { opacity: 1, y: 0 } : undefined}
           transition={{ duration: 0.9, ease: EXPO, delay: 0.3 }}
         >
-          <a href="#inicio" onClick={alClicAncla} aria-label="Balance Obras Civiles, ir al inicio" className="-ml-1 shrink-0 p-1">
-            <Logo variante="horizontal" subtitulo={false} titulo={null} className="h-6 w-auto xs:h-7 lg:h-9" />
-          </a>
+          <Enlace a="inicio" aria-label="Balance Obras Civiles, ir al inicio" className="-ml-1 shrink-0 p-1">
+            <Logo variante="horizontal" subtitulo={false} titulo={null} className="h-6 w-auto sm:h-7 lg:h-9" />
+          </Enlace>
 
-          <nav aria-label="Secciones" className="hidden xl:block">
+          <nav aria-label="Páginas" className="hidden xl:block">
             <ul className="flex items-center gap-7">
               {ENLACES.map((enlace) => (
                 <li key={enlace.id}>
-                  <a
-                    href={`#${enlace.id}`}
-                    onClick={alClicAncla}
-                    aria-current={activa === enlace.id ? 'true' : undefined}
+                  <Enlace
+                    a={enlace.id}
                     className={clsx(
                       'etiqueta relative block py-2 transition-colors duration-300 hover:text-oro-claro',
-                      activa === enlace.id ? 'text-oro' : 'text-hueso/75',
+                      pagina === enlace.id ? 'text-oro' : 'text-hueso/75',
                     )}
                   >
                     {enlace.corto}
                     <span
                       aria-hidden="true"
-                      className={clsx('absolute inset-x-0 -bottom-0.5 h-px origin-left bg-oro transition-transform duration-500 ease-expo', activa === enlace.id ? 'scale-x-100' : 'scale-x-0')}
+                      className={clsx('absolute inset-x-0 -bottom-0.5 h-px origin-left bg-oro transition-transform duration-500 ease-expo', pagina === enlace.id ? 'scale-x-100' : 'scale-x-0')}
                     />
-                  </a>
+                  </Enlace>
                 </li>
               ))}
             </ul>
@@ -90,17 +89,10 @@ export default function Navegacion() {
 
           <div className="flex items-center gap-2">
             <Magnetico fuerza={0.25}>
-              <a
-                href="#cotiza"
-                onClick={(evento) => {
-                  evento.preventDefault()
-                  irACotizar()
-                }}
-                className="boton boton-oro boton-chico"
-              >
+              <button type="button" onClick={() => irACotizar()} className="boton boton-oro boton-chico">
                 <span className="sm:hidden">Cotizar</span>
                 <span className="hidden sm:inline">Cotiza tu obra</span>
-              </a>
+              </button>
             </Magnetico>
             <button
               type="button"
@@ -117,21 +109,15 @@ export default function Navegacion() {
         </m.div>
       </m.header>
 
-      <AnimatePresence>{menu && <MenuMovil alCerrar={() => setMenu(false)} activa={activa} />}</AnimatePresence>
+      <AnimatePresence>{menu && <MenuMovil alCerrar={() => setMenu(false)} pagina={pagina} />}</AnimatePresence>
     </>
   )
 }
 
-function MenuMovil({ alCerrar, activa }) {
+function MenuMovil({ alCerrar, pagina }) {
   const panel = useRef(null)
   useBloquearScroll(true)
   useAtraparFoco(panel, true, alCerrar)
-
-  const ir = (id) => (evento) => {
-    evento.preventDefault()
-    alCerrar()
-    setTimeout(() => irA(`#${id}`), 420)
-  }
 
   return (
     <m.div
@@ -148,7 +134,7 @@ function MenuMovil({ alCerrar, activa }) {
     >
       <Reticula variante="plano" ejes cruces opacidad={0.7} />
       <div className="contenedor relative flex h-16 shrink-0 items-center justify-between">
-        <Logo variante="horizontal" subtitulo={false} titulo={null} className="h-6 w-auto xs:h-7" />
+        <Logo variante="horizontal" subtitulo={false} titulo={null} className="h-6 w-auto sm:h-7" />
         <button
           type="button"
           onClick={alCerrar}
@@ -159,24 +145,23 @@ function MenuMovil({ alCerrar, activa }) {
         </button>
       </div>
 
-      <nav aria-label="Secciones" className="contenedor relative flex min-h-0 flex-1 flex-col justify-center overflow-y-auto py-6">
+      <nav aria-label="Páginas" className="contenedor relative flex min-h-0 flex-1 flex-col justify-center overflow-y-auto py-6">
         <ul className="space-y-1.5">
           {ENLACES.map((enlace, i) => (
             <li key={enlace.id} className="overflow-hidden">
-              <m.a
-                href={`#${enlace.id}`}
-                onClick={ir(enlace.id)}
-                initial={{ y: '105%' }}
-                animate={{ y: '0%' }}
-                transition={{ duration: 0.7, ease: EXPO, delay: 0.25 + i * 0.05 }}
-                className={clsx(
-                  'flex items-baseline gap-4 py-1 font-display text-menu font-extrabold uppercase leading-none transition-colors',
-                  activa === enlace.id ? 'text-oro' : 'text-hueso hover:text-oro-claro',
-                )}
-              >
-                <span className="anotacion w-7 shrink-0 text-plano-linea">{enlace.numero}</span>
-                {enlace.corto}
-              </m.a>
+              <m.span className="block" initial={{ y: '105%' }} animate={{ y: '0%' }} transition={{ duration: 0.7, ease: EXPO, delay: 0.25 + i * 0.05 }}>
+                <Enlace
+                  a={enlace.id}
+                  alNavegar={() => setTimeout(alCerrar, 620)}
+                  className={clsx(
+                    'flex items-baseline gap-4 py-1 font-display text-menu font-extrabold uppercase leading-none transition-colors',
+                    pagina === enlace.id ? 'text-oro' : 'text-hueso hover:text-oro-claro',
+                  )}
+                >
+                  <span className="anotacion w-7 shrink-0 text-plano-linea">{enlace.numero ?? '00'}</span>
+                  {enlace.corto}
+                </Enlace>
+              </m.span>
             </li>
           ))}
         </ul>

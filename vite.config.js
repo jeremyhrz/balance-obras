@@ -7,7 +7,7 @@ const SITIO = 'https://balance-obras.vercel.app'
 
 // Lo que pinta la portada y no debe esperar a que el JS arranque para empezar a bajar:
 // Archivo expandida (titulares), Inter (texto) y Michroma (etiquetas y cotas).
-const FUENTES_PRECARGA = /(archivo-expandida-latin-wght|inter-latin-wght-normal|michroma-latin-400-normal)-[\w-]+\.woff2$/
+const FUENTES_PRECARGA = /(archivo-expandida-latin-wght|inter-latin-wght-normal|michroma-latin-400-normal|instrument-serif-latin-400-(?:normal|italic))-[\w-]+\.woff2$/
 
 function metasDelSitio() {
   return {

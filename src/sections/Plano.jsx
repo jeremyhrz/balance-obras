@@ -31,10 +31,13 @@ function PlanoAnimado() {
   const seccion = useRef(null)
   const { scrollYProgress: p } = useScroll({ target: seccion, offset: ['start start', 'end end'] })
   const [paso, setPaso] = useState(0)
+  const [fotosListas, setFotosListas] = useState(false)
   useMotionValueEvent(p, 'change', (v) => {
     let i = 0
     INICIOS.forEach((inicio, j) => { if (v >= inicio) i = j })
     setPaso((actual) => (actual === i ? actual : i))
+    // Las fotos de la fase D se montan al llegar a la estructura (no en la primera carga) y se quedan.
+    if (v > 0.4) setFotosListas(true)
   })
 
   const fondo = useMapeo(p, [0, 0.55, 0.76], ['#0D2742', '#0D2742', '#111213'])
@@ -52,7 +55,7 @@ function PlanoAnimado() {
   const actual = PASOS_PLANO[paso]
 
   return (
-    <section id="plano" ref={seccion} className="relative h-[520svh] lg:h-[460vh]" aria-labelledby="plano-titulo">
+    <section id="plano" ref={seccion} className="relative h-[360svh] lg:h-[390vh]" aria-labelledby="plano-titulo">
       <m.div className="sticky top-0 flex h-svh flex-col overflow-hidden" style={{ backgroundColor: fondo }}>
         <m.div className="absolute inset-0" style={{ opacity: reticula }}>
           <Reticula variante="plano" ejes cruces opacidad={0.9} />
@@ -62,12 +65,12 @@ function PlanoAnimado() {
           {/* ── Texto: rótulo, título y pasos */}
           <div className="relative z-10 lg:self-center">
             <Rotulo id="plano" tono="plano" />
-            <h2 id="plano-titulo" className="titulo-seccion mt-3 text-[clamp(1.6rem,7.6vw,4.6rem)] lg:mt-6">
+            <h2 id="plano-titulo" className="titulo-seccion mt-3 text-[clamp(1.6rem,7.6vw,4.6rem)] lg:mt-6 lg:text-[clamp(3rem,4.9vw,4.4rem)]">
               De plano a <m.span style={{ color: colorTexto }}>realidad</m.span>
             </h2>
 
             {/* Teléfono: solo el paso actual, que cambia con un barrido */}
-            <div className="relative mt-3 h-[6.75rem] lg:hidden">
+            <div className="relative mt-3 h-[7.25rem] lg:hidden">
               <AnimatePresence mode="popLayout" initial={false}>
                 <m.div
                   key={actual.numero}
@@ -79,7 +82,7 @@ function PlanoAnimado() {
                 >
                   <p className="anotacion text-plano-linea">{actual.numero} / 05 · {actual.anotacion}</p>
                   <h3 className="titulo-bloque mt-1.5 text-hueso">{actual.titulo}</h3>
-                  <p className="mt-1.5 text-sm leading-snug text-hueso/80">{actual.texto}</p>
+                  <p className="texto-serif mt-1 text-hueso/85">{actual.texto}</p>
                 </m.div>
               </AnimatePresence>
             </div>
@@ -102,7 +105,7 @@ function PlanoAnimado() {
                       <span className="titulo-bloque block text-hueso">{pp.titulo}</span>
                       <span
                         className={clsx(
-                          'block overflow-hidden text-sm text-hueso/75 transition-all duration-500',
+                          'texto-serif block overflow-hidden text-hueso/80 transition-all duration-500',
                           activo ? 'mt-2 max-h-24 opacity-100' : 'max-h-0 opacity-0',
                         )}
                       >
@@ -122,6 +125,7 @@ function PlanoAnimado() {
                 <m.div className="absolute inset-0" style={{ opacity: dibujo }}>
                   <Edificio p={p} className="size-full overflow-visible" />
                 </m.div>
+                {fotosListas && (
                 <m.div className="absolute inset-[3%] overflow-hidden rounded-[2px]" style={{ opacity: fotoPlano }}>
                   <Foto id="arquitectura-edificio" uso="movil-plano" rellenar etiqueta={false} alt="" sizes="(min-width: 1024px) 40vw, 80vw" />
                   <m.div className="absolute inset-0" style={{ clipPath: recorte }}>
@@ -130,6 +134,7 @@ function PlanoAnimado() {
                     </m.div>
                   </m.div>
                 </m.div>
+                )}
               </div>
             </div>
           </div>

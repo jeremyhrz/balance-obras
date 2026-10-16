@@ -1,16 +1,18 @@
 import { useRef } from 'react'
 import { m } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
+import EtiquetaReferencial from '../components/EtiquetaReferencial'
 import Foto from '../components/Foto'
 import LineaLaser, { useNivelPuntero } from '../components/LineaLaser'
 import Magnetico from '../components/Magnetico'
 import Polvo from '../components/Polvo'
 import Reticula from '../components/Reticula'
-import TextoDividido from '../components/TextoDividido'
+import Enlace from '../components/Enlace'
+import TextoDividido, { Enfasis } from '../components/TextoDividido'
 import { CIFRAS, PORTADA } from '../data/balance.js'
 import { useCotizacion } from '../lib/cotizacion'
 import { useIntroTerminada } from '../lib/intro'
-import { EXPO } from '../lib/movimiento'
+import { EXPO, usePunteroFino } from '../lib/movimiento'
 import { alClicAncla } from '../lib/scroll'
 
 /**
@@ -24,7 +26,9 @@ export default function Portada() {
   const ref = useRef(null)
   const listo = useIntroTerminada()
   const { irACotizar } = useCotizacion()
-  const { posicion, giro } = useNivelPuntero(ref, { inicial: 0.7 })
+  const fino = usePunteroFino()
+  // Con dedo, la línea vive en la franja libre de arriba; con ratón, sigue al cursor.
+  const { posicion, giro } = useNivelPuntero(ref, fino ? { inicial: 0.7 } : { inicial: 0.2, rango: [0.12, 0.26] })
   const entrar = (retraso) => ({
     initial: { opacity: 0, y: 24 },
     animate: listo ? { opacity: 1, y: 0 } : undefined,
@@ -33,11 +37,12 @@ export default function Portada() {
 
   return (
     <section id="inicio" ref={ref} className="relative isolate flex min-h-svh flex-col justify-end overflow-hidden pb-14 pt-28 lg:pb-20">
-      <Foto id="portada" movil="movil" rellenar prioridad alt="" proporcion="16:9" vineta className="-z-10" />
+      <Foto id="portada" movil="movil" rellenar prioridad alt="" proporcion="16:9" vineta etiqueta={false} className="-z-10" />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-carbon via-carbon/55 to-carbon/20" />
       <Reticula trazar desvanecer="bordes" opacidad={0.8} />
       <Polvo />
-      <LineaLaser posicion={posicion} giro={giro} lectura etiqueta="Nivel láser" intensidad={0.7} />
+      <LineaLaser posicion={posicion} giro={giro} lectura={fino} etiqueta={fino ? 'Nivel láser' : undefined} intensidad={0.7} />
+      <EtiquetaReferencial posicion="abajo-derecha" />
 
       <div className="contenedor relative">
         <m.p className="etiqueta text-oro" {...entrar(0.1)}>
@@ -45,18 +50,18 @@ export default function Portada() {
         </m.p>
         {listo && <TextoDividido como="h1" texto={PORTADA.titulo} alVer={false} retraso={0.15} className="titulo-display mt-5 max-w-[14ch]" />}
         {!listo && <h1 className="titulo-display mt-5 max-w-[14ch] opacity-0">{PORTADA.titulo.replace(/\*/g, '')}</h1>}
-        <m.p className="mt-6 max-w-xl text-hueso/80 md:text-lg" {...entrar(0.45)}>
-          {PORTADA.texto}
-        </m.p>
+        <m.div {...entrar(0.45)}>
+          <Enfasis como="p" texto={PORTADA.texto} className="texto-lead mt-6 max-w-xl" />
+        </m.div>
         <m.div className="mt-8 flex flex-wrap items-center gap-3" {...entrar(0.6)}>
           <Magnetico>
             <button type="button" onClick={() => irACotizar()} className="boton boton-oro">
               <span>Cotiza tu obra</span>
             </button>
           </Magnetico>
-          <a href="#obras" onClick={alClicAncla} className="boton boton-linea">
+          <Enlace a="obras" className="boton boton-linea">
             <span>Ver obras</span>
-          </a>
+          </Enlace>
         </m.div>
         <m.dl className="mt-10 flex gap-10 border-t border-hueso/10 pt-6" {...entrar(0.75)}>
           {CIFRAS.map((c) => (

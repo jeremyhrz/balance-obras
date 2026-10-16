@@ -34,10 +34,10 @@ export default function Servicios() {
         <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <Rotulo id="servicios" />
-            <TextoDividido como="h2" texto={'Lo que\n*construimos*'} className="titulo-seccion mt-6" />
+            <TextoDividido como="h1" texto={'Lo que\n*construimos*'} className="titulo-pagina mt-6" />
           </div>
-          <Revelar como="p" className="max-w-md text-hueso/75 lg:text-right">
-            De la ingeniería al último acabado, con supervisión en cada etapa.
+          <Revelar como="p" className="texto-lead max-w-md lg:text-right">
+            De la ingeniería al <em>último acabado</em>, con supervisión en cada etapa.
           </Revelar>
         </div>
 
@@ -69,7 +69,7 @@ export default function Servicios() {
                 {/* Cerrado: número y nombre en vertical */}
                 <span aria-hidden={activo} className={clsx('absolute inset-x-0 bottom-0 top-0 flex flex-col items-center justify-between py-6 transition-opacity duration-300', activo ? 'opacity-0' : 'opacity-100')}>
                   <Icono nombre={s.icono} className="size-8 text-oro" grosor={1.25} />
-                  <span className="titulo-bloque whitespace-nowrap text-hueso [writing-mode:vertical-rl] [transform:rotate(180deg)]">{s.nombre}</span>
+                  <span className="titulo-bloque min-h-0 whitespace-nowrap text-[clamp(0.95rem,1.15vw,1.1rem)] text-hueso [writing-mode:vertical-rl] [transform:rotate(180deg)]">{s.nombre}</span>
                   <span className="anotacion text-concreto">{s.numero}</span>
                 </span>
 
@@ -80,7 +80,7 @@ export default function Servicios() {
                     <span className="anotacion text-oro">{s.numero} / 05</span>
                   </div>
                   <h3 className="titulo-seccion mt-4 text-[clamp(1.6rem,2.4vw,2.4rem)]">{s.titulo}</h3>
-                  <p className="mt-3 max-w-md text-hueso/80">{s.descripcion}</p>
+                  <p className="texto-serif mt-3 max-w-md text-hueso/85">{s.descripcion}</p>
                   {s.etiquetas?.length > 0 && (
                     <ul className="mt-4 flex flex-wrap gap-2">
                       {s.etiquetas.map((e) => (
@@ -112,7 +112,7 @@ export default function Servicios() {
               </div>
               <div className="p-5">
                 <h3 className="titulo-bloque">{s.titulo}</h3>
-                <p className="mt-2 text-sm text-hueso/75">{s.descripcion}</p>
+                <p className="texto-serif mt-2 text-hueso/80">{s.descripcion}</p>
                 <button
                   type="button"
                   onClick={() => irACotizar(s.id)}

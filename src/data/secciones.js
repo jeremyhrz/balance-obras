@@ -5,8 +5,8 @@
  * JS puro.
  */
 export const SECCIONES = [
-  { id: 'inicio', nombre: 'Inicio', corto: 'Inicio', numero: null, menu: false },
-  { id: 'plano', nombre: 'De plano a realidad', corto: 'Plano', numero: '01', menu: true },
+  { id: 'inicio', nombre: 'Inicio', corto: 'Inicio', numero: null, menu: true },
+  { id: 'plano', nombre: 'De plano a realidad', corto: 'Plano', numero: '01', menu: false },
   { id: 'servicios', nombre: 'Servicios', corto: 'Servicios', numero: '02', menu: true },
   { id: 'obras', nombre: 'Obras', corto: 'Obras', numero: '03', menu: true },
   { id: 'proceso', nombre: 'Proceso', corto: 'Proceso', numero: '04', menu: true },

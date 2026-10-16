@@ -85,6 +85,29 @@ export function alClicAncla(evento) {
 
 let bloqueos = 0
 
+/** ¿Hay un menú, visor o modal bloqueando el scroll? (lo usa el botón flotante para apartarse). */
+export function hayBloqueo() {
+  return bloqueos > 0
+}
+const avisarBloqueo = () => window.dispatchEvent(new CustomEvent('bloqueo-scroll', { detail: bloqueos }))
+
+/**
+ * Lleva la página arriba de golpe al cambiar de página, aunque Lenis esté detenido por un menú
+ * que todavía se está cerrando (con ratón y menos de 1280 px el menú no dejaba subir).
+ */
+export function subirDeGolpe() {
+  const raiz = document.documentElement
+  raiz.style.scrollBehavior = 'auto'
+  window.scrollTo(0, 0)
+  raiz.style.scrollBehavior = ''
+  if (lenisActivo) {
+    const detenido = bloqueos > 0
+    lenisActivo.start()
+    lenisActivo.scrollTo(0, { immediate: true, force: true })
+    if (detenido) lenisActivo.stop()
+  }
+}
+
 /**
  * Congela el scroll de la página mientras `activo` sea true (menú del teléfono, visor, modal).
  * Admite varios a la vez. Dentro del panel, un contenedor con scroll propio debe llevar
@@ -98,12 +121,14 @@ export function useBloquearScroll(activo) {
       document.documentElement.style.overflow = 'hidden'
       lenisActivo?.stop()
     }
+    avisarBloqueo()
     return () => {
       bloqueos -= 1
       if (bloqueos === 0) {
         document.documentElement.style.overflow = ''
         lenisActivo?.start()
       }
+      avisarBloqueo()
     }
   }, [activo])
 }

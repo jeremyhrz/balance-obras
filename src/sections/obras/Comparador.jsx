@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { animate, useInView } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import EtiquetaReferencial from '../../components/EtiquetaReferencial'
 import Foto from '../../components/Foto'
 import { useMenosMovimiento } from '../../lib/movimiento'
 
@@ -85,6 +86,8 @@ export default function Comparador({
       <span className="etiqueta pointer-events-none absolute right-3 top-3 rounded-[2px] bg-carbon/70 px-2.5 py-1.5 text-oro backdrop-blur-sm md:right-5 md:top-5">
         {etiquetaDespues}
       </span>
+
+      <EtiquetaReferencial posicion="abajo-derecha" />
 
       {/* Divisor con su asa (role slider para teclado y lectores de pantalla). */}
       <div className="pointer-events-none absolute inset-y-0" style={{ left: porcentaje }}>

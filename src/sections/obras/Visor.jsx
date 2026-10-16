@@ -152,7 +152,7 @@ export default function Visor({ obra, alCerrar }) {
               )}
               {obra.referencial && <EtiquetaReferencial enLinea />}
             </div>
-            <p className="mt-3 max-w-2xl text-sm text-hueso/80 md:text-base">{obra.descripcion}</p>
+            <p className="texto-serif mt-3 max-w-2xl text-hueso/85">{obra.descripcion}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <BotonWhatsApp variante="linea" chico mensaje={mensajeObra(obra)}>Algo parecido</BotonWhatsApp>

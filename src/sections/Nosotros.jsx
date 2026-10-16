@@ -4,7 +4,7 @@ import Contador from '../components/Contador'
 import Foto from '../components/Foto'
 import Revelar from '../components/Revelar'
 import Rotulo from '../components/Rotulo'
-import TextoDividido from '../components/TextoDividido'
+import TextoDividido, { Enfasis } from '../components/TextoDividido'
 import { BALANCE, CIFRAS, NOSOTROS } from '../data/balance.js'
 import { useMenosMovimiento } from '../lib/movimiento'
 
@@ -29,8 +29,10 @@ export default function Nosotros() {
       <div className="contenedor seccion grid gap-14 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center">
         <div>
           <Rotulo id="nosotros" />
-          <TextoDividido como="h2" texto={NOSOTROS.titulo} className="titulo-seccion mt-6" />
-          <Revelar como="p" className="mt-6 max-w-xl text-hueso/80">{NOSOTROS.texto}</Revelar>
+          <TextoDividido como="h1" texto={NOSOTROS.titulo} className="titulo-pagina mt-6" />
+          <Revelar>
+            <Enfasis como="p" texto={NOSOTROS.texto} className="texto-lead mt-6 max-w-xl" />
+          </Revelar>
 
           {/* El nivel de burbuja */}
           <div ref={nivel} className="mt-12 max-w-xl">
@@ -63,11 +65,11 @@ export default function Nosotros() {
                 </div>
               </div>
             </m.div>
-            <ul className="mt-6 grid grid-cols-3 gap-4">
+            <ul className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-4">
               {NOSOTROS.pilares.map((p, i) => (
                 <Revelar como="li" key={p.id} retraso={0.15 + i * 0.08} className="border-t border-oro/40 pt-3">
                   <p className="etiqueta text-oro">{p.nombre}</p>
-                  <p className="mt-2 text-sm text-hueso/75">{p.texto}</p>
+                  <p className="texto-serif mt-2 text-hueso/80">{p.texto}</p>
                 </Revelar>
               ))}
             </ul>

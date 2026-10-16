@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { m } from 'framer-motion'
 import { useMapeo } from '../../lib/mapeo'
 
@@ -118,7 +119,7 @@ const VIDRIOS = (() => {
   return v
 })()
 
-export default function Edificio({ p, className }) {
+function Edificio({ p, className }) {
   const aleta = useRango(p, 0.6, 0.7)
   const marquesina = useRango(p, 0.66, 0.72)
   const barandas = useRango(p, 0.62, 0.72)
@@ -176,3 +177,6 @@ export default function Edificio({ p, className }) {
     </svg>
   )
 }
+
+// Solo recibe un MotionValue estable: no hace falta re-renderizar el SVG cuando cambia el paso.
+export default memo(Edificio)

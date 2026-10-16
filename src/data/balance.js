@@ -162,7 +162,7 @@ export const REFERENCIAS_TAMANO = [
 export const PORTADA = {
   titulo: 'Construimos *con balance*', // en dos renglones: «CONSTRUIMOS / CON BALANCE»
   bajada: 'Ingeniería · Construcción · Remodelación',
-  texto: 'Del plano a la obra terminada: ingeniería, construcción y remodelación con el balance justo entre costo, tiempo y calidad.',
+  texto: 'Del plano a la obra terminada: ingeniería, construcción y remodelación con *el balance justo* entre costo, tiempo y calidad.',
 }
 
 /** «De plano a realidad» (§5.4): los cinco pasos que acompañan el dibujo, con su anotación de plano. */
@@ -215,7 +215,7 @@ export const PROCESO = [
 export const NOSOTROS = {
   titulo: 'El balance entre *costo, tiempo y calidad*',
   texto:
-    'Más de 10 años y cientos de proyectos nos enseñaron que una buena obra no sacrifica ninguno de los tres: se planifica para cumplir con los tres.',
+    'Más de 10 años y cientos de proyectos nos enseñaron que una buena obra no sacrifica ninguno: *se planifica para cumplir con los tres*.',
   pilares: [
     { id: 'costo', nombre: 'Costo', texto: 'Un presupuesto claro antes de empezar, para que sepas en qué se invierte cada parte.' }, // POR CONFIRMAR
     { id: 'tiempo', nombre: 'Tiempo', texto: 'Plazos realistas y seguimiento del avance en cada etapa.' }, // POR CONFIRMAR
@@ -226,7 +226,7 @@ export const NOSOTROS = {
 /** Contacto (§5.11). */
 export const CONTACTO = {
   titulo: '¿Hablamos de *tu obra*?',
-  texto: 'Escríbenos por WhatsApp, cuéntanos qué tienes en mente y coordinamos una visita.',
+  texto: 'Escríbenos por WhatsApp, cuéntanos qué tienes en mente y *coordinamos una visita*.',
 }
 
 /** Anotaciones de plano para decorar (retícula, cotas, portada). Genéricas: no describen obras reales. */
